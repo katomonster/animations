@@ -23,7 +23,7 @@
   opacity: 1;
   animation: scootIn 1s 1 ease-out;
 }
-
+/* There is a flickering issue with filter: blur */
 @keyframes scootOut {
   0% {
     transform: translate3d(0, 0, 0);

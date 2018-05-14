@@ -49,6 +49,8 @@ class App extends Component {
   }
 
   setColor(data) {
+    console.log(document.getElementById('vehicle-id-' + data.id));
+    console.log(this.data.filter(d => d.id === data.id));
     if (this.state.prevColor || this.state.prevColor === this.state.currentColor) return;
     this.setState({
       selectedColor: data.value,
@@ -79,11 +81,11 @@ const VehicleImage = (props) => {
     const activeClass = props.selectedColor === data.value ? ' active' : '';
     const prevClass = props.prevColor === data.value ? ' out' : ''
     return (
-      <img key={index} src={data.src} className={`vehicle-img${activeClass}${prevClass}`} id={`vehicle-${data.id}`} alt={data.value} width="300" height="200"/>
+      <img key={index} src={data.src} className={`vehicle-img${activeClass}${prevClass}`} id={`vehicle-id-${data.id}`} alt={data.value} width="300" height="200"/>
     );
   });
   return (
-    <figure> {images} </figure>
+    <figure id="image-cont"> {images} </figure>
   );
 }
 
