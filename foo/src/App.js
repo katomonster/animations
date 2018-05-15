@@ -49,15 +49,44 @@ class App extends Component {
   }
 
   setColor(data) {
-    console.log(document.getElementById('vehicle-id-' + data.id));
-    console.log(this.data.filter(d => d.id === data.id));
-    if (this.state.prevColor || this.state.prevColor === this.state.currentColor) return;
+    const isInDom = (document.getElementById('vehicle-id-' + data.id)) || false;
+    const curData = this.data.filter(d => d.id === data.id)[0];
+    const dataIndex = (this.data.indexOf(curData));// index of the data, not the img DOM
+    if (!isInDom) {
+      const img = document.createElement('img');
+
+      img.setAttribute('key', dataIndex);
+      img.setAttribute('src', curData.src);
+      img.setAttribute('class', 'vehicle-img active');
+      img.setAttribute('id', 'vehicle-id-' + curData.id);
+      img.setAttribute('alt', curData.value);
+      img.setAttribute('width', '300');
+      img.setAttribute('height', '200');
+      const figure = document.getElementById("image-cont");
+      figure.appendChild(img);
+    }
+
+    const activeImg = document.getElementsByClassName('active')[0];
+
+    if (this.state.currentColor === curData.value || this.state.currentColor === activeImg.getAttribute('value')) return;
+
+    activeImg.classList.remove('active');
+    activeImg.classList.add('out');
+
+    const targetImg = document.getElementById('vehicle-id-' + curData.id);
+
+    if (!targetImg.classList.contains('active')) {
+      targetImg.classList.add('active');
+    }
+
     this.setState({
       selectedColor: data.value,
       prevColor: this.state.currentColor
     });
 
     setTimeout(() => {
+      const outImg = document.querySelector('.vehicle-img.out');
+      outImg.classList.remove('out');
       this.setState({
         currentColor: this.state.selectedColor,
         prevColor: null
@@ -69,7 +98,9 @@ class App extends Component {
     return (
       <div className="App">
         <div className="year-make-model">{this.data[0].yearMakeModel}</div>
-        <VehicleImage dataSet={this.data} selectedColor={this.state.selectedColor} prevColor={this.state.prevColor}/>
+        <figure id="image-cont">
+          <VehicleImage dataSet={this.data} selectedColor={this.state.selectedColor} prevColor={this.state.prevColor} index={0}/>
+        </figure>
         <Swatches onClick={this.setColor.bind(this)} dataSet={this.data} selectedColor={this.state.selectedColor}/>
       </div>
     );
@@ -77,15 +108,10 @@ class App extends Component {
 }
 
 const VehicleImage = (props) => {
-  const images = props.dataSet.map((data, index) => {
-    const activeClass = props.selectedColor === data.value ? ' active' : '';
-    const prevClass = props.prevColor === data.value ? ' out' : ''
-    return (
-      <img key={index} src={data.src} className={`vehicle-img${activeClass}${prevClass}`} id={`vehicle-id-${data.id}`} alt={data.value} width="300" height="200"/>
-    );
-  });
+  // const activeClass = props.selectedColor === props.dataSet[props.index].value ? ' active' : '';
+  // const prevClass = props.prevColor === props.dataSet[props.index].value ? ' out' : ''
   return (
-    <figure id="image-cont"> {images} </figure>
+     <img key='0' src={props.dataSet[props.index].src} className='vehicle-img active' id={`vehicle-id-${props.dataSet[props.index].id}`} alt={props.dataSet[props.index].value} width="300" height="200"/>
   );
 }
 
