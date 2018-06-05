@@ -112,3 +112,60 @@ nav {
 input {
   display: none;
 }
+
+@media (max-width: 600px) {
+  .App {
+    height: auto;
+  }
+
+  figure {
+    position: relative;
+    transform: none;
+    padding-left: 0;
+  }
+
+  nav {
+    position: relative;
+  }
+
+  .vehicle-img {
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+  }
+  .vehicle-img.out {
+    opacity: 1;
+    animation: scootOutNarrow 1s 1 ease-out;
+  }
+  .vehicle-img.active {
+    opacity: 1;
+    animation: scootInNarrow 1s 1 ease-out;
+  }
+
+  @keyframes scootOutNarrow {
+    0% {
+      transform: translate3d(-50%, 0, 0);
+      /*filter: blur(0);*/
+    }
+
+    100% {
+      transform: translate3d(-250%, 0, 0);
+      /*filter: blur(2px);*/
+    }
+  }
+
+  @keyframes scootInNarrow {
+    0% {
+      transform: translate3d(200%, 0, 0);
+      opacity: 0;
+      /*filter: blur(5px);*/
+    }
+    30% {
+      /*filter: blur(0);*/
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(-50%, 0, 0);
+      /*filter: blur(0);*/
+    }
+  }
+}

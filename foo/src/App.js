@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const _REMOTE = "https://media.ed.edmunds-media.com/kia/cadenza/2017/evox/";
-const _LOCAL = "images/";
+const IMAGE_SOURCE = {local: "images/", remote: "https://media.ed.edmunds-media.com/kia/cadenza/2017/evox/"}
 
-const _SRC = _REMOTE;
+const _SRC = IMAGE_SOURCE.local;
 
 const _DATA = [
   {
@@ -105,7 +104,6 @@ class App extends Component {
         <div className="year-make-model">{_DATA[0].yearMakeModel}</div>
         <figure id="image-cont">
           {images}
-        }
         </figure>
         <Swatches onClick={this.setColor.bind(this)} selectedColor={this.state.selectedColor}/>
       </div>
