@@ -5,6 +5,8 @@ const IMAGE_SOURCE = {local: "images/", remote: "https://media.ed.edmunds-media.
 
 const _SRC = IMAGE_SOURCE.local;
 
+const _DELAY = 500; // ms
+
 const _DATA = [
   {
     id: '401693617',
@@ -88,7 +90,14 @@ class App extends Component {
         currentColor: this.state.selectedColor,
         prevColor: null
       });
-    }, 1000);
+    }, _DELAY);
+  }
+
+  onImageClicked(index) {
+    const nextIndex = index === _DATA.length - 1 ? 0 : index + 1;
+    const nextColor = _DATA[nextIndex].value;
+    const nextId = _DATA[nextIndex].id;
+    this.setColor({value: nextColor, id: nextId});
   }
 
   render() {
@@ -96,7 +105,7 @@ class App extends Component {
       const activeClass = this.state.selectedColor === _DATA[index].value ? ' active' : '';
       const prevClass = this.state.prevColor === _DATA[index].value ? ' out' : '';
       return (
-         <img key={index} src={_DATA[index].src} className={`vehicle-img${activeClass}${prevClass}`} id={`vehicle-id-${_DATA[index].id}`} alt={_DATA[index].value} width="300" height="200"/>
+         <img key={index} src={_DATA[index].src} className={`vehicle-img${activeClass}${prevClass}`} id={`vehicle-id-${_DATA[index].id}`} alt={_DATA[index].value} width="300" height="200" onClick={() => this.onImageClicked(index)} />
       );
     });
     return (

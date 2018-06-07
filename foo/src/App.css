@@ -17,11 +17,11 @@
 }
 .vehicle-img.out {
   opacity: 1;
-  animation: scootOut 1s 1 ease-out;
+  animation: scootOut 0.5s 1 ease-out;
 }
 .vehicle-img.active {
   opacity: 1;
-  animation: scootIn 1s 1 ease-out;
+  animation: scootIn 0.5s 1 ease-out;
 }
 /* There is a flickering issue with filter: blur */
 @keyframes scootOut {
@@ -66,6 +66,9 @@
   display: inline-block;
   width: 36px;
   height: 36px;
+}
+.colors-list li label span {
+  cursor: pointer;
 }
 .colors-list__name {
   width: 100%;
@@ -134,11 +137,11 @@ input {
   }
   .vehicle-img.out {
     opacity: 1;
-    animation: scootOutNarrow 1s 1 ease-out;
+    animation: scootOutNarrow 0.5s 1 ease-out;
   }
   .vehicle-img.active {
     opacity: 1;
-    animation: scootInNarrow 1s 1 ease-out;
+    animation: scootInNarrow 0.5s 1 ease-out;
   }
 
   @keyframes scootOutNarrow {
