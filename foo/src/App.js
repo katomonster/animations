@@ -75,7 +75,7 @@ class App extends Component {
     }
   }
 
-  setColor(data) {
+  handleNextImage(data) {
     this.setState({
       selectedColor: data.value,
       prevColor: this.state.currentColor
@@ -93,11 +93,13 @@ class App extends Component {
     }, _DELAY);
   }
 
-  onImageClicked(index) {
+  onImageClicked() {
+    const curObj = _DATA.filter(data => data.value === this.state.selectedColor);
+    const index = _DATA.indexOf(curObj[0]);
     const nextIndex = index === _DATA.length - 1 ? 0 : index + 1;
     const nextColor = _DATA[nextIndex].value;
     const nextId = _DATA[nextIndex].id;
-    this.setColor({value: nextColor, id: nextId});
+    this.handleNextImage({value: nextColor, id: nextId});
   }
 
   render() {
@@ -105,16 +107,16 @@ class App extends Component {
       const activeClass = this.state.selectedColor === _DATA[index].value ? ' active' : '';
       const prevClass = this.state.prevColor === _DATA[index].value ? ' out' : '';
       return (
-         <img key={index} src={_DATA[index].src} className={`vehicle-img${activeClass}${prevClass}`} id={`vehicle-id-${_DATA[index].id}`} alt={_DATA[index].value} width="300" height="200" onClick={() => this.onImageClicked(index)} />
+         <img key={index} src={_DATA[index].src} className={`vehicle-img${activeClass}${prevClass}`} id={`vehicle-id-${_DATA[index].id}`} alt={_DATA[index].value} width="300" height="200"/>
       );
     });
     return (
       <div className="App">
         <div className="year-make-model">{_DATA[0].yearMakeModel}</div>
-        <figure id="image-cont">
+        <figure id="image-cont" onClick={this.onImageClicked.bind(this)}>
           {images}
         </figure>
-        <Swatches onClick={this.setColor.bind(this)} selectedColor={this.state.selectedColor}/>
+        <Swatches onClick={this.handleNextImage.bind(this)} selectedColor={this.state.selectedColor}/>
       </div>
     );
   }
